@@ -47,6 +47,23 @@
 </script>
 <title>Евгений Андреев — быстрые тексты: UX, документация, AI и оценка LLM</title>
 <meta name="description" content="Тексты, которые работают: UX-микрокопирайт, техническая документация и регламенты, промпты и оценка LLM. 28 лет практики на стыке инженерии и слова.">
+<link rel="canonical" href="https://andreevgeny.github.io/ux/">
+<meta name="theme-color" content="#f4efe7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050505" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://andreevgeny.github.io/ux/">
+<meta property="og:site_name" content="Евгений Андреев — быстрые тексты">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Быстрые тексты: UX, документация и AI — которые не нужно переделывать">
+<meta property="og:description" content="Кнопка, по которой кликают. Регламент, по которому не ошибаются. Промпт и eval-контур, которые экономят бюджет на LLM. 28 лет на стыке инженерии и слова.">
+<meta property="og:image" content="https://andreevgeny.github.io/ux/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Евгений Андреев — быстрые тексты: UX, документация, AI и оценка LLM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Быстрые тексты: UX, документация и AI">
+<meta name="twitter:description" content="Тексты, которые работают на результат: UX-микрокопирайт, регламенты, промпты и eval-контур для LLM. 28 лет практики.">
+<meta name="twitter:image" content="https://andreevgeny.github.io/ux/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -57,9 +74,11 @@
   "name": "Евгений Андреев",
   "alternateName": "Andreev Evgeny",
   "url": "https://andreevgeny.github.io/ux/",
+  "image": "https://andreevgeny.github.io/ux/og-image.png",
   "jobTitle": "Системный писатель · LLM-evaluation",
   "description": "Перевожу смысл с инженерного на человеческий и обратно. UX-тексты, техническая документация, промпты и оценка языковых моделей.",
-  "sameAs": ["https://github.com/andreevgeny", "https://t.me/eandreev"]
+  "knowsAbout": ["UX Writing", "Technical writing", "Prompt engineering", "LLM evaluation", "Service design", "Industrial automation"],
+  "sameAs": ["https://github.com/andreevgeny", "https://t.me/eandreev", "https://andreevgeny.github.io/portfolio/"]
 }
 </script>
 <style>
@@ -219,6 +238,23 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .card .links a + a{color:var(--muted);font-weight:600;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
 .card .links a + a:hover{color:var(--fire);text-decoration-color:currentColor}
 
+
+/* cell-facts: детали тарифа */
+.cell-facts{list-style:none;margin:14px 0 0;padding:14px 0 0;border-top:1px dashed var(--line);font-size:13.5px;color:var(--muted);display:grid;gap:6px}
+.cell-facts b{color:var(--text);font-weight:700}
+
+/* FAQ */
+.faq{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:900px){.faq{grid-template-columns:1fr}}
+.faq-item{background:linear-gradient(160deg,var(--surface),var(--ink-2));border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;transition:border-color .3s}
+.faq-item[open]{border-color:oklch(45% 0.12 45)}
+.faq-item summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;font-weight:800;font-size:15.5px;color:var(--text)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';margin-left:auto;color:var(--fire);font-size:20px;line-height:1;font-family:'IBM Plex Mono',monospace;flex:none}
+.faq-item[open] summary::after{content:'−'}
+.faq-item p{margin-top:10px;font-size:14.5px;color:var(--muted)}
+.faq-item p b{color:var(--text)}
+
 /* TABLE */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);padding:4px 12px 8px;background:var(--ink-2)}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
@@ -268,6 +304,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <a href="#work">Кейсы</a>
       <a href="#flow">Как работаю</a>
       <a href="#prices">Форматы</a>
+      <a href="#faq">Вопросы</a>
     </div>
     <div class="nav-soc">
       <a href="https://github.com/andreevgeny" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.75c0 .26.18.57.69.48A10 10 0 0 0 12 2Z"/></svg></a>
@@ -285,7 +322,8 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   <a href="#work">Кейсы</a>
   <a href="#flow">Как работаю</a>
   <a href="#prices">Форматы</a>
-  <a class="sheet-cta" href="https://t.me/eandreev">Написать в Telegram</a>
+  <a href="#faq">Вопросы</a>
+  <a class="sheet-cta" href="https://t.me/eandreev?text=%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%2C%20%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%20%D0%BD%D0%B0%20%D1%82%D0%B5%D0%BA%D1%81%D1%82." target="_blank" rel="noopener">Написать в Telegram</a>
 </div>
 
 <header class="hero">
@@ -298,12 +336,12 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
     <ul class="proof proof--row rise" data-d="3">
       <li><b>28</b><span>лет на стыке инженерии и слова</span></li>
       <li><b>4355</b><span>строк Python в собственном LLM-боте</span></li>
-      <li><b>28</b><span>моделей сравнены одной методикой</span></li>
+      <li><b>15+</b><span>релизов бота в продакшене</span></li>
       <li><b>11</b><span>выпускников доведены до своего бренда</span></li>
     </ul>
 
     <div class="hero-cta rise" data-d="3">
-      <a class="pill hot" href="https://t.me/eandreev">Обсудить задачу</a>
+      <a class="pill hot" href="https://t.me/eandreev?text=%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%2C%20%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%20%D0%BD%D0%B0%20%D1%82%D0%B5%D0%BA%D1%81%D1%82." target="_blank" rel="noopener">Обсудить задачу</a>
       <a class="pill" href="#work">Смотреть кейсы ↓</a>
     </div>
   </div>
@@ -438,6 +476,12 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
         <div class="links"><a href="https://andreevgeny.github.io/portfolio/writing.html">Открыть работы</a></div>
       </div>
     </div>
+    <div class="proof proof--row rise" data-d="3" style="margin-top:36px">
+      <li><b>24–48</b><span>часов — черновик микро-текста</span></li>
+      <li><b>28</b><span>моделей сравнены одной методикой</span></li>
+      <li><b>15+</b><span>релизов бота в продакшене</span></li>
+      <li><b>3</b><span>класса метрик в eval-контуре</span></li>
+    </div>
   </div>
 </section>
 
@@ -467,21 +511,39 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <p class="rise" data-d="2">Фиксирую цену до старта. Правки в рамках задачи — без доплат. Оплата по СБП или карте, для зарубежных заказчиков — по договорённости.</p>
     </div>
     <div class="bento">
-      <div class="cell w4 rise">
+      <div class="cell w4">
         <span class="num">Микро-текст</span>
         <h4>от 3 000 ₽</h4>
         <p>Кнопка, сообщение об ошибке, абзац, правка короткого текста. Один проход, без погружения в систему.</p>
+        <ul class="cell-facts">
+          <li><b>Срок:</b> 24 ч</li>
+          <li><b>Состав:</b> до 5 микро-текстов в одной поставке</li>
+          <li><b>Правки:</b> одна итерация по факту</li>
+        </ul>
       </div>
       <div class="cell w4 rise" data-d="1">
         <span class="num">Текст под ключ</span>
         <h4>от 15 000 ₽</h4>
         <p>Микрокопирайт лендинга, бота или регламента целиком. Включает один раунд правок по факту.</p>
+        <ul class="cell-facts">
+          <li><b>Срок:</b> 3–5 дней после интервью 30 мин</li>
+          <li><b>Состав:</b> тексты + файл-источник в вашем формате</li>
+          <li><b>Правки:</b> один раунд входит, дальше — по договорённости</li>
+        </ul>
       </div>
       <div class="cell w4 rise" data-d="2">
         <span class="num">AI-слой</span>
         <h4>отдельно</h4>
         <p>Промпты, eval-контур, аудит модели под бюджет. Считаю метрики, а не обещаю «умный ИИ».</p>
+        <ul class="cell-facts">
+          <li><b>Срок:</b> по договорённости, обычно 1–2 недели</li>
+          <li><b>Состав:</b> промпт-архитектура, eval-набор, отчёт с метриками</li>
+          <li><b>Правки:</b> два итерационных прогона на выбор модели</li>
+        </ul>
       </div>
+    </div>
+    <div class="hero-cta" style="margin-top:24px">
+      <a class="pill hot" href="https://t.me/eandreev?text=%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%2C%20%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%20%D0%BD%D0%B0%20%D1%82%D0%B5%D0%BA%D1%81%D1%82." target="_blank" rel="noopener">Обсудить ваш тариф</a>
     </div>
     <div class="note rise">
       <b>Не берусь</b> за «напишите что-нибудь красивое про наш продукт без контекста». Текст без контекста — это декорация, а не инструмент. Принесите задачу — сделаем дело.
@@ -489,13 +551,50 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   </div>
 </section>
 
+<section id="faq">
+  <span class="sec-num" aria-hidden="true">06</span>
+  <div class="shell">
+    <div class="sec-head">
+      <span class="kicker rise">06 · Вопросы</span>
+      <h2 class="sec-title rise" data-d="1">Шесть вопросов, которые задают чаще всего</h2>
+      <p class="rise" data-d="2">Если здесь нет вашего — задайте в Telegram, отвечу в течение дня. Без воды.</p>
+    </div>
+    <div class="faq">
+      <details class="faq-item rise">
+        <summary>За какой срок вы отдадите текст?</summary>
+        <p>Черновик микро-текста — в течение 24 часов. Текст под ключ (лендинг, бот, регламент) — 3–5 дней после 30-минутного интервью. AI-слой — по договорённости, обычно 1–2 недели: быстрее — значит измеряем меньше, а это не моя работа.</p>
+      </details>
+      <details class="faq-item rise" data-d="1">
+        <summary>Сколько правок входит?</summary>
+        <p>В «микро-тексте» — одна итерация. В «тексте под ключ» — один раунд правок по факту: я вижу, как текст живёт у вас, и правлю под реальное использование, а не под свои предположения. Дальше — по договорённости, чтобы не размазать ответственность.</p>
+      </details>
+      <details class="faq-item rise">
+        <summary>Что мне нужно подготовить до старта?</summary>
+        <p>Три вещи: где стоит текст (лендинг, бот, регламент, уведомление), кто пользователь (роль, мотивация, тревоги) и какой шаг от него нужен (клик, регистрация, согласие с правилами). Чем конкретнее контекст — тем точнее первый результат и меньше итераций.</p>
+      </details>
+      <details class="faq-item rise" data-d="1">
+        <summary>Вы пишете сами или нейросетью?</summary>
+        <p>Ответственность за результат — моя. LLM использую как инструмент там, где это честно: перевод, рутина, оценка собственных текстов метриками. Для AI-слоя (промпты, eval-контур) считаю precision/recall, BLEU/ROUGE, LLM-as-a-Judge — не «по ощущениям», а цифрами. Проверяю запуском: текст должен работать у вас, не у меня в голове.</p>
+      </details>
+      <details class="faq-item rise">
+        <summary>Берётесь за любые темы?</summary>
+        <p>Нет. Не беру «напишите что-нибудь красивое про наш продукт без контекста» — текст без задачи превращается в декорацию. Берусь за UX-тексты в продуктах, регламенты для команд, AI-обвязку и редактуру/локализацию с сохранением tone of voice.</p>
+      </details>
+      <details class="faq-item rise" data-d="1">
+        <summary>Как оплачивать?</summary>
+        <p>Цена фиксируется до старта — правки в рамках задачи без доплат. Оплата по СБП или карте для РФ; для зарубежных заказчиков — по договорённости. NDA подписываю до получения чувствительных материалов.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <section id="cta" style="background:var(--ink-2)">
   <div class="shell sec-head" style="margin-bottom:0">
-    <span class="kicker rise">06 · Старт</span>
+    <span class="kicker rise">07 · Старт</span>
     <h2 class="sec-title rise" data-d="1">Принесите задачу, а не бриф из интернета</h2>
     <p class="rise" data-d="2">Чем конкретнее контекст — что за система, кто пользователь, какой шаг нужен, — тем точнее будет текст и быстрее первый результат.</p>
     <div class="hero-cta rise" data-d="3">
-      <a class="pill hot" href="https://t.me/eandreev">Написать в Telegram</a>
+      <a class="pill hot" href="https://t.me/eandreev?text=%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%2C%20%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%20%D0%BD%D0%B0%20%D1%82%D0%B5%D0%BA%D1%81%D1%82." target="_blank" rel="noopener">Написать в Telegram</a>
       <a class="pill" href="mailto:eugene.v.andreev@gmail.com">Почта</a>
     </div>
     <div class="cx-row rise" data-d="3">
@@ -509,7 +608,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
 <footer>
   <div class="fin">
     <span>© 2026 Евгений Андреев · системный писатель, LLM-evaluation</span>
-    <span>Лендинг опубликован из приватного репозитория · сам сайт открыт</span>
+    <span>Исходник: <a href="https://github.com/andreevgeny/ux" target="_blank" rel="noopener">github.com/andreevgeny/ux</a> · <a href="https://andreevgeny.github.io/portfolio/" target="_blank" rel="noopener">другие работы</a></span>
   </div>
 </footer>
 
