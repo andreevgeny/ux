@@ -1,8 +1,50 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light" data-metal="brass">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>
+/* THEME · светлота (light/dark) + акцентный металл (brass/bronze/copper).
+   Подключён в <head> без defer: атрибуты ставим ДО первой отрисовки,
+   чтобы страница не мигала тёмной перед перекраской. Логика — как в
+   portfolio/assets/js/theme.js (делегирование на document, ключи
+   pf-theme / pf-metal, по умолчанию светлая + латунь). */
+(function(){ "use strict";
+  var THEME_KEY="pf-theme", METAL_KEY="pf-metal";
+  var THEMES=["light","dark"], METALS=["brass","bronze","copper"];
+  var METAL_SHORT={brass:"Латунь",bronze:"Бронза",copper:"Медь"};
+  function read(k,allowed,fb){ try{var v=localStorage.getItem(k);return allowed.indexOf(v)===-1?fb:v;}catch(e){return fb;} }
+  function save(k,v){ try{localStorage.setItem(k,v);}catch(e){} }
+  var theme=read(THEME_KEY,THEMES,"light"), metal=read(METAL_KEY,METALS,"brass");
+  document.documentElement.setAttribute("data-theme",theme);
+  document.documentElement.setAttribute("data-metal",metal);
+  function bindAll(){
+    if(document.documentElement.dataset.bound==="1")return;
+    document.documentElement.dataset.bound="1";
+    document.addEventListener("click",function(ev){
+      var n=ev.target.closest("[data-theme-set],[data-metal-toggle],[data-scroll-top]");
+      if(!n)return;
+      if(n.hasAttribute("data-theme-set")){
+        var v=n.getAttribute("data-theme-set");
+        if(v!=="light"&&v!=="dark")return; if(v===theme)return;
+        theme=v; document.documentElement.setAttribute("data-theme",theme); save(THEME_KEY,theme); syncTheme(); return;
+      }
+      if(n.hasAttribute("data-metal-toggle")){
+        metal=METALS[(METALS.indexOf(metal)+1)%METALS.length];
+        document.documentElement.setAttribute("data-metal",metal); save(METAL_KEY,metal); syncMetal(); return;
+      }
+    });
+  }
+  function syncTheme(){ var o=document.querySelectorAll("[data-theme-set]");
+    for(var i=0;i<o.length;i++){var v=o[i].getAttribute("data-theme-set");var on=v===theme;o[i].classList.toggle("is-active",on);o[i].setAttribute("aria-pressed",on?"true":"false");} }
+  function syncMetal(){ var b=document.querySelectorAll("[data-metal-toggle]");
+    for(var i=0;i<b.length;i++){var l=b[i].querySelector("[data-metal-label]");if(l)l.textContent=METAL_SHORT[metal];
+      var t="Акцент: "+METAL_SHORT[metal]+" — нажмите, чтобы сменить";b[i].setAttribute("aria-label",t);b[i].setAttribute("title",t);} }
+  bindAll();
+  if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){syncTheme();syncMetal();});}
+  else{syncTheme();syncMetal();}
+})();
+</script>
 <title>Евгений Андреев — быстрые тексты: UX, документация, AI и оценка LLM</title>
 <meta name="description" content="Тексты, которые работают: UX-микрокопирайт, техническая документация и регламенты, промпты и оценка LLM. 28 лет практики на стыке инженерии и слова.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,14 +56,37 @@
   "@type": "Person",
   "name": "Евгений Андреев",
   "alternateName": "Andreev Evgeny",
-  "url": "https://andreevgeny.github.io/fast-text-landing-site/",
+  "url": "https://andreevgeny.github.io/ux/",
   "jobTitle": "Системный писатель · LLM-evaluation",
   "description": "Перевожу смысл с инженерного на человеческий и обратно. UX-тексты, техническая документация, промпты и оценка языковых моделей.",
   "sameAs": ["https://github.com/andreevgeny", "https://t.me/eandreev"]
 }
 </script>
 <style>
-:root{
+:root,[data-theme="light"]{
+  color-scheme:light;
+  --ink:#f4efe7; --ink-2:#ece4d8;
+  --surface:oklch(99% 0.008 80);
+  --surface-2:oklch(95% 0.012 80);
+  --line:oklch(88% 0.02 75);
+  --text:#1c1813;
+  --muted:#6a6055;
+  --dim:#a89c8c;
+  --fire:oklch(58% 0.13 70);
+  --fire-hot:oklch(68% 0.12 78);
+  --fire-deep:oklch(46% 0.12 60);
+  --ok:oklch(46% 0.12 150);
+  --on-accent:#fff7ef;
+  --sp-2:14px; --sp-3:22px; --s4:22px;
+  --r-sm:10px; --r:18px; --r-lg:28px;
+  --pad:clamp(20px,4vw,44px);
+  --shell:min(1180px,calc(100% - var(--pad) - var(--pad)));
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.76,0,.24,1);
+  --glass:blur(22px) saturate(140%);
+}
+[data-theme="dark"]{
+  color-scheme:dark;
   --ink:#050505; --ink-2:#0B0B0C;
   --surface:oklch(18% 0.006 60);
   --surface-2:oklch(23% 0.008 60);
@@ -34,14 +99,9 @@
   --fire-deep:oklch(52% 0.17 38);
   --ok:oklch(74% 0.14 152);
   --on-accent:#0a0603;
-  --sp-2:14px; --sp-3:22px; --s4:22px;
-  --r-sm:10px; --r:18px; --r-lg:28px;
-  --pad:clamp(20px,4vw,44px);
-  --shell:min(1180px,calc(100% - var(--pad) - var(--pad)));
-  --ease-out:cubic-bezier(.16,1,.3,1);
-  --ease-io:cubic-bezier(.76,0,.24,1);
-  --glass:blur(22px) saturate(140%);
 }
+[data-metal="bronze"]{--fire:oklch(55% 0.12 52);--fire-hot:oklch(65% 0.11 60);--fire-deep:oklch(43% 0.11 42);}
+[data-metal="copper"]{--fire:oklch(60% 0.15 36);--fire-hot:oklch(70% 0.14 44);--fire-deep:oklch(48% 0.14 28);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
@@ -81,8 +141,8 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}html.anim .rise{opacity:1;transform:none}html{scroll-behavior:auto}}
 
 /* NAV */
-.nav{position:fixed;inset:0 0 auto 0;z-index:90;background:oklch(5% 0 0/.72);backdrop-filter:var(--glass);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
-.nav.scrolled{background:oklch(4% 0 0/.88);border-bottom-color:var(--line)}
+.nav{position:fixed;inset:0 0 auto 0;z-index:90;background:color-mix(in oklch,var(--surface) 78%,transparent);backdrop-filter:var(--glass);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+.nav.scrolled{background:color-mix(in oklch,var(--surface) 92%,transparent);border-bottom-color:var(--line)}
 .nav-in{width:var(--shell);margin-inline:auto;display:flex;align-items:center;gap:clamp(16px,2.4vw,36px);height:62px}
 .nav-soc{display:flex;align-items:center;gap:4px;margin-left:8px}
 .nav-soc a{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;color:var(--dim);transition:color .25s,background .25s}
@@ -99,7 +159,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .nav-burger{display:none;margin-left:auto;width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;background:transparent;cursor:pointer;color:var(--text)}
 .nav-burger svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none}
 @media (max-width:900px){.nav-main{display:none}.nav-burger{display:flex}.nav-in{height:58px}}
-.nav-sheet{position:fixed;inset:0;z-index:95;display:none;background:oklch(5% 0.004 60/.97);backdrop-filter:blur(12px);padding:76px var(--pad) 32px;overflow-y:auto}
+.nav-sheet{position:fixed;inset:0;z-index:95;display:none;background:color-mix(in oklch,var(--ink) 96%,transparent);backdrop-filter:blur(12px);padding:76px var(--pad) 32px;overflow-y:auto}
 .nav-sheet.open{display:block}
 .nav-sheet a{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0;font-size:19px;color:var(--text);border-bottom:1px solid var(--line)}
 .nav-sheet .sheet-cta{margin-top:24px;border:0;justify-content:center;background:var(--fire);color:var(--on-accent);font-weight:700;border-radius:999px;padding:15px 24px;font-size:16px}
@@ -135,16 +195,16 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .cell{container-type:inline-size;position:relative;overflow:clip;background:linear-gradient(160deg,var(--surface),var(--ink-2));border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(18px,2.2vw,26px);transition:border-color .35s var(--ease-out),transform .35s var(--ease-out),box-shadow .35s}
 .cell:hover{border-color:oklch(45% 0.12 45);transform:translateY(-3px);box-shadow:0 16px 44px #0009}
 .cell::before{content:'';position:absolute;inset:0 0 auto 0;height:1px;background:linear-gradient(90deg,transparent,oklch(85% 0.1 60/.45),transparent)}
-.cell.w4{grid-column:span 4}.cell.w6{grid-column:span 6}.cell.w12{grid-column:span 12}
+.cell.w3{grid-column:span 3}.cell.w4{grid-column:span 4}.cell.w6{grid-column:span 6}.cell.w12{grid-column:span 12}
 .cell h4{margin-bottom:7px}
 .cell p{font-size:14.5px}
 .cell .num{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:10px}
-@media (max-width:1080px){.cell.w4{grid-column:span 6}}
-@media (max-width:900px){.cell.w4,.cell.w6{grid-column:span 12}}
+@media (max-width:1080px){.cell.w3,.cell.w4{grid-column:span 6}}
+@media (max-width:900px){.cell.w3,.cell.w4,.cell.w6{grid-column:span 12}}
 
 /* DECK / CARDS */
 .deck{display:grid;gap:34px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));perspective:1200px}
-.card{position:relative;transform-style:preserve-3d;display:flex;flex-direction:column;background:linear-gradient(155deg,var(--surface-2),var(--ink-2));border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s var(--ease-out),border-color .4s;will-change:transform}
+.card{position:relative;transform-style:preserve-3d;display:flex;flex-direction:column;background:linear-gradient(155deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s var(--ease-out),border-color .4s;will-change:transform}
 .card:hover{border-color:oklch(48% 0.14 45)}
 .card::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),oklch(80% 0.14 55/.14),transparent 62%);opacity:0;transition:opacity .4s}
 .card:hover::after{opacity:1}
@@ -154,7 +214,7 @@ html.anim .rise[data-d="3"]{transition-delay:.18s}
 .card .facts{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);line-height:1.5}
 .card .facts b{color:var(--ok)}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.tag{background:oklch(100% 0 0/.04);border:1px solid var(--line);border-radius:7px;padding:4px 10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted)}
+.tag{background:color-mix(in oklch,var(--text) 5%,transparent);border:1px solid var(--line);border-radius:7px;padding:4px 10px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted)}
 .card .links{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:22px;flex-wrap:wrap;font-size:14px;font-weight:700}
 .card .links a + a{color:var(--muted);font-weight:600;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
 .card .links a + a:hover{color:var(--fire);text-decoration-color:currentColor}
@@ -172,14 +232,33 @@ tbody tr:hover{background:oklch(100% 0 0/.022)}
 footer{border-top:1px solid var(--line);background:var(--ink-2);padding:40px 0 56px;margin-top:40px}
 footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:13.5px;color:var(--dim)}
 .cx-row{display:flex;flex-wrap:wrap;gap:10px 20px;font-size:14px;align-items:center;margin-top:8px}
-.cx-item{display:inline-flex;align-items:center;gap:7px;color:oklch(78% 0.01 70)}
+.cx-item{display:inline-flex;align-items:center;gap:7px;color:var(--muted)}
 .cx-item svg{flex:none;width:14px;height:14px;stroke:oklch(62% 0.02 60);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .cx-item a{color:inherit;text-decoration:underline;text-decoration-color:oklch(40% 0.01 60);text-underline-offset:3px;transition:color .25s,text-decoration-color .25s}
 .cx-item a:hover{color:var(--fire);text-decoration-color:currentColor}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* THEME SWITCH */
+.switch-cluster{position:fixed;right:18px;bottom:18px;z-index:100;display:flex;align-items:center;gap:10px;padding:7px;border-radius:999px;background:color-mix(in oklch,var(--surface) 86%,transparent);backdrop-filter:var(--glass);border:1px solid var(--line);box-shadow:0 10px 30px #0003}
+.theme-toggle{display:flex;background:color-mix(in oklch,var(--text) 7%,transparent);border-radius:999px;padding:3px}
+.theme-toggle button{appearance:none;border:0;background:transparent;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--muted);padding:6px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;transition:color .2s,background .2s}
+.theme-toggle button.is-active{background:var(--surface);color:var(--text);box-shadow:0 1px 6px #0002}
+.theme-toggle button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+.metal-toggle{appearance:none;border:1px solid var(--line);background:color-mix(in oklch,var(--text) 5%,transparent);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);padding:7px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:7px;transition:border-color .2s,color .2s}
+.metal-toggle:hover{border-color:var(--fire);color:var(--fire)}
+.metal-toggle .swatch{width:11px;height:11px;border-radius:50%;background:var(--fire);box-shadow:0 0 0 2px color-mix(in oklch,var(--fire) 30%,transparent)}
+.metal-toggle .mlabel{letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+@media (max-width:560px){.switch-cluster{right:12px;bottom:12px;gap:7px;padding:6px}.theme-toggle button{padding:5px 9px}.metal-toggle{padding:6px 9px}}
 </style>
 </head>
 <body id="top">
+<div class="switch-cluster" aria-label="Оформление">
+  <div class="theme-toggle" role="group" aria-label="Тема">
+    <button type="button" data-theme-set="light" aria-pressed="true" class="is-active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Свет</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>Тьма</button>
+  </div>
+  <button type="button" class="metal-toggle" data-metal-toggle aria-label="Акцент: латунь"><span class="swatch"></span><span class="mlabel" data-metal-label>Латунь</span></button>
+</div>
 <nav class="nav" id="nav">
   <div class="nav-in">
     <a class="brand" href="#top">АНДРЕЕВ <b>ЕВГЕНИЙ</b></a>
@@ -214,7 +293,7 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
   <div class="shell hero-inner">
     <div class="kicker rise">Тексты, которые работают · UX · документация · AI</div>
     <h1 class="display rise" data-d="1" style="margin-top:16px">Быстрые тексты: <span class="l2">UX, документация и AI</span>, которые не нужно переделывать</h1>
-    <p class="tagline rise" data-d="2">Я не «генерирую контент». Я перевожу смысл с инженерного на человеческий и обратно — и проверяю результат фактом, а не ощущением. 28 лет практики: от промышленных узлов учёта газа до LLM-бота в продакшене. Тексты, микрокопирайт, регламенты и промпты, которые встраиваются в систему, а не висят рядом с ней.</p>
+    <p class="tagline rise" data-d="2">Я пишу тексты, которые работают на результат, а не на красоту. Кнопка, по которой кликают. Регламент, по которому не ошибаются. История, что втягивает клиента и продаёт идею. 28 лет — от промышленной автоматики до LLM-бота в продакшене: я знаю, где слова превращаются в деньги, а где висят декорацией. Перевожу смысл с инженерного на человеческий и обратно — и проверяю фактом, не ощущением.</p>
 
     <ul class="proof proof--row rise" data-d="3">
       <li><b>28</b><span>лет на стыке инженерии и слова</span></li>
@@ -252,12 +331,12 @@ footer .fin{width:var(--shell);margin-inline:auto;display:flex;justify-content:s
       <div class="cell w4 rise" data-d="2">
         <span class="num">03 / Редактура и локализация</span>
         <h4>RU↔EN, тон бренда, фактчек</h4>
-        <p>Привожу «юридический» к человеческому, правлю английский под носителя, адаптирую tone of voice. Проверяю факты, а не только запятые.</p>
+        <p>Правлю так, чтобы текст звучал живо, а не как переведённый робот. Русский довожу до человеческого, английский — под носителя. Держу tone of voice бренда и проверяю факты, а не только запятые: ошибка в термине дороже опечатки.</p>
       </div>
       <div class="cell w4 rise" data-d="1">
-        <span class="num">04 / AI-тексты и промпты</span>
-        <h4>Промпт-архитектура и цепочки</h4>
-        <p>Промпт как интерфейс: его читают и модель, и человек. Мультипровайдерность, RAG-контексты, цепочки — чтобы результат не плыл от запуска к запуску.</p>
+        <span class="num">04 / AI-тексты, промпты и архитектура</span>
+        <h4>Промпт-архитектура, оркестрация и агенты</h4>
+        <p>Промпт — это интерфейс, который читают и модель, и человек. Проектирую не одну фразу, а контур целиком: промпт-архитектуру, оркестрацию обвязки (loop, память, цели) и стратегии — prompt / goals / loop. Собираю типового агента как систему: файл-конституция, дашборд состояния, память, метрики — то, что сейчас реально работает, а не из учебника.</p>
       </div>
       <div class="cell w4 rise" data-d="2">
         <span class="num">05 / Оценка LLM · AI-тесты</span>
