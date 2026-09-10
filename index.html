@@ -853,6 +853,27 @@
       padding-top: var(--s3);
     }
 
+    /* Карточка-ссылка на разбор кейса: та же карточка .project,
+       но целиком кликабельна и ведёт на страницу кейсов. */
+    .project-link {
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .project-link:hover {
+      color: inherit;
+      border-color: var(--accent);
+    }
+
+    .project-link .text-link {
+      color: var(--accent);
+    }
+
+    .project-link:hover .text-link {
+      color: var(--accent-hover);
+    }
+
     .section-end {
       margin-top: var(--s4);
     }
@@ -1823,6 +1844,66 @@
         </div>
 
         <div class="grid grid-2">
+          <a
+            class="project project-link"
+            href="cases/#case-1"
+          >
+            <p class="project-type">Кейс · статья / РБК Компании, Бизнес</p>
+            <h3>
+              Угол брифа — в каждом блоке статьи
+            </h3>
+            <p class="project-description">
+              Новостная/аналитическая статья для сервиса «РБК Компании»:
+              3 000–5 000 знаков, деловой B2B-стиль. Условие брифа —
+              держать фокус на цифровизации, а не скатываться в обзор санкций.
+            </p>
+            <p class="project-detail">
+              <strong>Бриф:</strong> рубрика «Бизнес»; угол —
+              цифровизация логистики; уникальность ≥ 85 %, Главред ≥ 7,5.
+            </p>
+            <ul class="tags" aria-label="Направления работы">
+              <li>B2B-текст</li>
+              <li>Структура и SEO</li>
+              <li>Обложка</li>
+              <li>Опубликовано</li>
+            </ul>
+            <span class="text-link">
+              Открыть разбор кейса <span aria-hidden="true">↗</span>
+            </span>
+          </a>
+
+          <a
+            class="project project-link"
+            href="cases/#case-2"
+          >
+            <p class="project-type">
+              Кейс · рассылки / школа музыки Казанцевой
+            </p>
+            <h3>
+              Ответ на боль сегмента, а не красивое название
+            </h3>
+            <p class="project-description">
+              Тестовое задание школы музыки Казанцевой: 5 тем для взрослой
+              аудитории и 5 для родителей детей 4–13 лет. Только темы,
+              без раскрытия — каждая опирается на боль своего сегмента.
+            </p>
+            <p class="project-detail">
+              <strong>Бриф:</strong> 5 тем взрослым + 5 родителям;
+              формулировки авторские — «чистый вывод нейросети» отсеивают
+              сразу.
+            </p>
+            <ul class="tags" aria-label="Направления работы">
+              <li>Рассылки</li>
+              <li>Сегменты ЦА</li>
+              <li>Заголовки</li>
+              <li>Tone of voice</li>
+              <li>Принято</li>
+            </ul>
+            <span class="text-link">
+              Открыть разбор кейса <span aria-hidden="true">↗</span>
+            </span>
+          </a>
+
           <article class="project">
             <p class="project-type">Собственный продукт / Python · LLM</p>
             <h3>Из аудио и видео — в текст, с которым можно работать</h3>
